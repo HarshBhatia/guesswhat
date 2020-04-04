@@ -6,12 +6,12 @@ import Play from "./pages/Play";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <h1>Guess What?</h1>
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/:uid" exact component={Play} />
+          <Route path="/:roomId" exact component={Play} />
         </Switch>
       </BrowserRouter>
     </div>
