@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "assessement2",
-=======
   "name": "guesswhat",
->>>>>>> f8493a13b6c82445b12420076d8acb2c4161e712
   "version": "0.1.0",
   "private": true,
   "dependencies": {
