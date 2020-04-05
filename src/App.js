@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Home from "./Pages/Home";
-import Play from "./Pages/Play";
+import Main from "./pages/Main";
+import Play from "./pages/PlayScreen";
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
       <h1>Guess What?</h1>
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/:roomId" exact component={Play} />
+          <Route path="/" exact component={Main} />
+          <Route path="/:gameId" exact component={Play} />
         </Switch>
       </BrowserRouter>
     </div>
