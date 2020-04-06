@@ -32,6 +32,9 @@ export default () => {
     socket.emit("startNextRound", gameId);
   };
 
+  const takeGuess = (guess) => {
+    socket.emit("takeGuess", gameId, guess);
+  };
   if (!hasJoinedGame) {
     return (
       <div>
@@ -47,25 +50,54 @@ export default () => {
 
   return (
     <div>
-      <h3>Time Remaining</h3>
       {gameState && (
         <div>
           <h4>
-            {gameState.timeRemaining} of {gameState.roundTime}
+            Time Remaining:{gameState.timeRemaining} of {gameState.roundTime}
           </h4>
+          <h3>Players</h3>
           <ul>
             {Object.values(gameState.players).map((p) => (
               <li key={p.name}>
-                Name:{p.name} Score:{p.points}
+                <b>Name: </b>
+                {p.name} <b>Score: </b>
+                {p.points}
               </li>
             ))}
           </ul>
+          <h3>Chat</h3>
+          <GuessChat guesses={gameState.guesses} onGuess={takeGuess} />
+          <button onClick={() => startNextRound()}>Start Round</button>
         </div>
       )}
-      <p>
-        {JSON.stringify(gameState)}
-        <button onClick={() => startNextRound()}>Start Round</button>
-      </p>
+      {!gameState && <p>Waiting for other people to join...</p>}
+      {/* <code><pre>{JSON.stringify(gameState)}</pre></code> */}
+    </div>
+  );
+};
+
+const GuessChat = ({ onGuess, guesses }) => {
+  const [guess, setGuess] = useState("");
+
+  return (
+    <div>
+      <ul>
+        {guesses.map((g) => (
+          <li>
+            {g.user.name}:{g.value}
+          </li>
+        ))}
+      </ul>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onGuess(guess);
+          setGuess("");
+        }}
+      >
+        <input value={guess} onChange={(e) => setGuess(e.target.value)} />
+        <button type="submit" children="Guess" />
+      </form>
     </div>
   );
 };
